@@ -4,55 +4,53 @@ import Hls from "hls.js";
 export const useHlsVideo = (url: string) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [progress, setProgress] = useState(0);
-  const requestRef = useRef<number | null>(null);
+  const hlsRef = useRef<Hls | null>(null);
 
-  const updateProgress = useCallback(() => {
+  useEffect(() => {
     const video = videoRef.current;
-    if (video && video.duration) {
-      setProgress((video.currentTime / video.duration) * 100);
-    }
-    requestRef.current = requestAnimationFrame(updateProgress);
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      if (video.duration)
+        setProgress((video.currentTime / video.duration) * 100);
+    };
+
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
   }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !url) return;
 
-    let hls: Hls | null = null;
-
     if (Hls.isSupported()) {
-      hls = new Hls({
+      const hls = new Hls({
         maxBufferLength: 10,
-        maxBufferSize: 30 * 1000 * 1000,
+        maxBufferSize: 5 * 1024 * 1024, // 5MB
         enableWorker: true,
       });
       hls.loadSource(url);
       hls.attachMedia(video);
+      hlsRef.current = hls;
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = url;
     }
 
-    requestRef.current = requestAnimationFrame(updateProgress);
-
     return () => {
-      if (hls) {
-        hls.detachMedia();
-        hls.destroy();
-      }
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
       }
       video.src = "";
     };
-  }, [url, updateProgress]);
+  }, [url]);
 
-  const seek = (percent: number) => {
-    if (videoRef.current && videoRef.current.duration) {
+  const seek = useCallback((percent: number) => {
+    if (videoRef.current?.duration) {
       videoRef.current.currentTime =
         (percent / 100) * videoRef.current.duration;
-      setProgress(percent);
     }
-  };
+  }, []);
 
   return { videoRef, progress, seek };
 };
