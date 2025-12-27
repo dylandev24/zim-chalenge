@@ -97,7 +97,7 @@ export const VideoCard = ({ item, isActive, onCardHover }: any) => {
         borderColor: isLocalHover ? "#433738" : "transparent",
       }}
       style={{ willChange: "transform" }}
-      className="relative hover:border-b-[0.375rem] border-b-0 border-2 overflow-hidden aspect-[9/16] w-[280px] md:w-[410px] rounded-[30px] transition-all duration-300 shadow-2xl cursor-pointer bg-black"
+      className="relative hover:border-b-[0.375rem] border-b-0 border-2 overflow-hidden aspect-[9/16] w-[280px] md:w-[410px] rounded-[30px] transition-all duration-300 shadow-2xl cursor-pointer"
     >
       <motion.img
         src={item.thumbnail}
