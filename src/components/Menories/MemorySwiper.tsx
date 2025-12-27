@@ -23,7 +23,7 @@ export const MemorySwiper = () => {
         nested={true}
         coverflowEffect={{
           rotate: 0,
-          stretch: -60,
+          stretch: -20,
           depth: 120,
           modifier: 1,
           slideShadows: false,
