@@ -168,19 +168,11 @@ export const VideoCard = React.memo(
                   step="0.1"
                   value={progress}
                   onChange={(e) => seek(parseFloat(e.target.value))}
-                  className="
-        absolute inset-0 w-full appearance-none bg-transparent cursor-pointer
-        [&::-webkit-slider-thumb]:appearance-none
-      "
+                  className="absolute inset-0 w-full appearance-none bg-transparent cursor-pointer[&::-webkit-slider-thumb:appearance-none"
                 />
 
                 <div
-                  className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full
-        bg-white border border-orange-400 shadow-md
-        opacity-0 scale-75 transition-all duration-200
-        group-hover/progress:opacity-100 group-hover/progress:scale-110
-        group-hover/progress:shadow-lg
-        hover:scale-125 hover:shadow-[0_0_8px_rgba(255,165,0,0.9)]"
+                  className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border border-orange-400 shadow-md opacity-0 scale-75 transition-all duration-200 group-hover/progress:opacity-100 group-hover/progress:scale-110 group-hover/progress:shadow-lg hover:scale-125 hover:shadow-[0_0_8px_rgba(255,165,0,0.9)] hidden md:block"
                   style={{ left: `calc(${progress}% - 8px)` }}
                 />
               </div>
