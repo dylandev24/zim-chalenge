@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+.swiper-wrapper {
+  pointer-events: none;
+}
+
+.swiper-slide {
+  pointer-events: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1 !important;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.swiper-slide > div,
+.swiper-slide .pointer-events-auto {
+  pointer-events: auto !important;
+}
+
+.swiper-slide-active {
+  z-index: 50 !important;
+}
+
+.swiper-slide-next,
+.swiper-slide-prev {
+  z-index: 40 !important;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 30px;
+  height: 50px;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 30px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.swiper-slide > div:focus-visible {
+  outline: 3px solid #f97316;
+  outline-offset: 8px;
+  border-radius: 2.5rem;
+}
